@@ -1,4 +1,4 @@
-module github.com/orzogc/fake115uploader
+module github.com/archyta/fake115uploader
 
 go 1.18
 

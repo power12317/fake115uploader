@@ -14,7 +14,7 @@ import (
 
 	"github.com/valyala/fastjson"
 
-	"github.com/orzogc/fake115uploader/cipher"
+	"github.com/archyta/fake115uploader/cipher"
 )
 
 // 根据pickcode获取blockhash
