@@ -307,7 +307,7 @@ func createDir(pid uint64, name string) (cid uint64, e error) {
 		}
 	}
 
-	return 0, fmt.Errorf("创建文件夹 %s 失败", name)
+	return 0, fmt.Errorf("创建文件夹 %s 失败, errno=%d", name, v.GetInt("errno"))
 }
 
 // 读取设置文件
