@@ -14,7 +14,7 @@
 
 安装最新git版本，运行：
 
-`go install github.com/orzogc/fake115uploader@master`
+`go install github.com/archyta/fake115uploader@master`
 
 ### 使用方法
 首先要先运行一次 `fake115uploader` 生成设置文件fake115uploader.json（使用 `-l 文件` 指定设置文件，默认为程序所在的文件夹里的fake115uploader.json），然后登陆网页版115，按F12后刷新，将115网页请求的Cookie的值全部复制到fake115uploader.json的cookies的值里（参考[这里](https://github.com/LSD08KM/Fake115Upload_Python3#cookies%E5%9C%A8%E5%93%AA%E9%87%8C)），或者运行时用参数 `-k Cookie` 指定要用的Cookie。
