@@ -20,8 +20,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/eiannone/keyboard"
 	"github.com/archyta/fake115uploader/cipher"
+	"github.com/eiannone/keyboard"
 	"github.com/valyala/fastjson"
 )
 
@@ -269,6 +269,24 @@ func createDir(pid uint64, name string) (cid uint64, e error) {
 	v, err := postFormJSON(createDirURL, form.Encode())
 	checkErr(err)
 
+	/* {
+	       "state": true,
+	       "error": "",
+	       "errno": "",
+	       "aid": 1,
+	       "cid": "2622289597681368858",
+	       "cname": "A1",
+	       "file_id": "2622289597681368858",
+	       "file_name": "A1"
+	   }
+	   {
+	       "state": false,
+	       "error": "该目录名称已存在。",
+	       "errno": 20004,
+	       "errtype": "war"
+	   }
+	*/
+
 	if v.GetBool("state") {
 		cid, err = strconv.ParseUint(string(v.GetStringBytes("cid")), 10, 64)
 		checkErr(err)
@@ -295,6 +313,9 @@ func createDir(pid uint64, name string) (cid uint64, e error) {
 			parentID, err := strconv.ParseUint(string(v.GetStringBytes("pid")), 10, 64)
 			if err != nil {
 				continue
+			}
+			if *verbose {
+				log.Printf("parentID=%d,pid=%d,cid=%d,name=%s", parentID, pid, cid, name)
 			}
 			if parentID == pid && string(v.GetStringBytes("n")) == name {
 				cid, err = strconv.ParseUint(string(v.GetStringBytes("cid")), 10, 64)
