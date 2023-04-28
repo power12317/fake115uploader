@@ -314,12 +314,14 @@ func createDir(pid uint64, name string) (cid uint64, e error) {
 			if err != nil {
 				continue
 			}
+			cid, err = strconv.ParseUint(string(v.GetStringBytes("cid")), 10, 64)
+			checkErr(err)
 			if *verbose {
-				log.Printf("parentID=%d,pid=%d,cid=%d,name=%s", parentID, pid, cid, name)
+				log.Printf("parentID=%d,pid=%d,cid=%d,name=%s", parentID, pid, cid, string(v.GetStringBytes("n")))
 			}
 			if parentID == pid && string(v.GetStringBytes("n")) == name {
-				cid, err = strconv.ParseUint(string(v.GetStringBytes("cid")), 10, 64)
-				checkErr(err)
+				
+				
 				if *verbose {
 					log.Printf("文件夹 %s 已存在，cid：%d", name, cid)
 				}
