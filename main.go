@@ -35,10 +35,12 @@ const (
 	initURL      = "https://uplb.115.com/4.0/initupload.php?k_ec=%s"
 	getinfoURL   = "https://uplb.115.com/3.0/getuploadinfo.php"
 	listFileURL  = "https://webapi.115.com/files?aid=1&cid=%d&o=user_ptime&asc=0&offset=0&show_dir=0&limit=%d&natsort=1&format=json"
+    listDirURL   = "https://webapi.115.com/files?aid=1&cid=%d&o=user_ptime&asc=0&offset=0&show_dir=1&limit=1150&snap=0&natsort=1&record_open_time=1&format=json"
 	downloadURL  = "https://proapi.115.com/app/chrome/downurl"
 	orderURL     = "https://webapi.115.com/files/order"
 	createDirURL = "https://webapi.115.com/files/add"
 	searchURL    = "https://webapi.115.com/files/search?offset=0&limit=100000&aid=1&cid=%d&format=json"
+	searchURL2   = "https://webapi.115.com/files/search?offset=0&limit=1150&aid=1&cid=%d&format=json&search_value=%s"
 	appVer       = "30.5.1"
 	userAgent    = "Mozilla/5.0 115disk/" + appVer
 	endString    = "000000"
@@ -297,10 +299,10 @@ func createDir(pid uint64, name string) (cid uint64, e error) {
 	}
 	// 要创建的文件夹已经存在
 	if v.GetInt("errno") == 20004 {
-		reqURL, err := url.Parse(fmt.Sprintf(searchURL, pid))
+		reqURL, err := url.Parse(fmt.Sprintf(listDirURL, pid))
 		checkErr(err)
 		query := reqURL.Query()
-		query.Set("search_value", name)
+		// query.Set("search_value", name)
 		reqURL.RawQuery = query.Encode()
 		v, err := getURLJSON(reqURL.String())
 		checkErr(err)
